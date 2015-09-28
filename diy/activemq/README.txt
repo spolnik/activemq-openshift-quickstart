@@ -1,11 +1,11 @@
 Welcome to Apache ActiveMQ 
 =======================================================================
-Apache ActiveMQ is a high performance Apache 2.0 licensed Message 
-Broker and JMS 1.1 implementation.
+Apache ActiveMQ is a high performance Apache 2.0 licensed
+Message Broker and JMS 1.1 implementation.
 
 Getting Started
 ===============
-To help you get started, try the following links:-
+To help you get started, try the following links:
 
 Getting Started
 http://activemq.apache.org/version-5-getting-started.html
@@ -60,4 +60,3 @@ Licensing
    with a JVM supporting the Java Cryptography extensions
    <http://java.sun.com/javase/technologies/security/>.  ActiveMQ does 
    not include these libraries itself, but is designed to use them.
-

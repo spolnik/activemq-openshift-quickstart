@@ -16,9 +16,15 @@
 --%>
 <html>
 <head>
-<title>Consumers for <c:out value="${requestContext.queueConsumerQuery.JMSDestination}" /></title>
+<c:set var="pageTitle" value="Consumers for ${requestContext.queueConsumerQuery.JMSDestination}"/>
+
+<%@include file="decorators/head.jsp" %>
 </head>
 <body>
+
+<%@include file="decorators/header.jsp" %>
+
+
 
 <h2>Active Consumers for <c:out value="${requestContext.queueConsumerQuery.JMSDestination}" /></h2>
 
@@ -52,27 +58,35 @@
 <c:forEach items="${requestContext.queueConsumerQuery.consumers}" var="row">
 <tr>
 	<td>
-		<a href="connection.jsp?connectionID=${row.clientId}">${row.clientId}</a><br/>
-	    ${row.connectionId}</a>
-	</td>
-	<td>${row.sessionId}</td>
-	<td>${row.selector}</td>
-	<td>${row.enqueueCounter}</td>
-	<td>${row.dequeueCounter}</td>
-	<td>${row.dispatchedCounter}</td>
-	<td>${row.dispatchedQueueSize}</td>
+        <c:choose>
+            <c:when test="${row.network}">
+                <a href="network.jsp">${row.clientId}</a><br/>
+            </c:when>
+            <c:otherwise>
+                <a href="<c:url value="connection.jsp?connectionID=${row.clientId}"/>"><c:out value="${row.clientId}" /></a><br/>
+            </c:otherwise>
+        </c:choose>
+            <c:out value="${row.connectionId}" />
+    </td>
+	<td><c:out value="${row.sessionId}" /></td>
+	<td><c:out value="${row.selector}" /></td>
+	<td><c:out value="${row.enqueueCounter}" /></td>
+	<td><c:out value="${row.dequeueCounter}" /></td>
+	<td><c:out value="${row.dispatchedCounter}" /></td>
+	<td><c:out value="${row.dispatchedQueueSize}" /></td>
 	<td>
-		${row.prefetchSize}<br/>
-		${row.maximumPendingMessageLimit}
+		<c:out value="${row.prefetchSize}" /><br/>
+		<c:out value="${row.maximumPendingMessageLimit}" />
 	</td>
 	<td>
-		${row.exclusive}<br/>
-		${row.retroactive}
+		<c:out value="${row.exclusive}" /><br/>
+		<c:out value="${row.retroactive}" />
 	</td>
 </tr>
 </c:forEach>
 </tbody>
 </table>
+<%@include file="decorators/footer.jsp" %>
 
 </body>
 </html>

@@ -16,9 +16,10 @@
 --%>
 <html>
 <head>
-<title>Queues</title>
+<c:set var="pageTitle" value="Queues"/>
+<c:set var="disableJavaScript" value="true" scope="request"/>
 
-    <c:set var="disableJavaScript" value="true" scope="request"/>
+<%@include file="decorators/head.jsp" %>
 
    <script src='<c:url value="/js/mochi/MochiKit.js"/>' type="text/javascript"></script>
    <script src='<c:url value="/js/plotkit/Base.js"/>' type="text/javascript"></script>
@@ -28,6 +29,8 @@
 </head>
 <body>
 
+<%@include file="decorators/header.jsp" %>
+
 <script>
 var options = {
    "IECanvasHTC": "<c:url value="/js/plotkit/iecanvas.htc"/>",
@@ -35,7 +38,7 @@ var options = {
    "padding": {left: 0, right: 0, top: 10, bottom: 30},
    "xTicks": [<c:forEach items="${requestContext.brokerQuery.queues}" var="row" varStatus="status"
          ><c:if 
-         test="${status.count > 1}">, </c:if>{v:${status.count}, label:"${row.name}"}</c:forEach>]
+         test="${status.count > 1}">, </c:if>{v:${status.count}, label:"<c:out value="${row.name}"/>"}</c:forEach>]
 };
 
 function drawGraph() {
@@ -62,6 +65,7 @@ Other values we can graph...
 <td>${row.dequeueCount}</td>
 --%>
 
+<%@include file="decorators/footer.jsp" %>
 
 </body>
 </html>
