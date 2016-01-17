@@ -134,8 +134,6 @@
         -->
         <transportConnectors>
             <transportConnector name="http" uri="http://OPENSHIFT_DIY_IP:8080"/>
-            <transportConnector name="websocket" uri="ws://OPENSHIFT_DIY_IP:8000"/>
-            <transportConnector name="secure_websocket" uri="wss://OPENSHIFT_DIY_IP:8443"/>
         </transportConnectors>
 
 
