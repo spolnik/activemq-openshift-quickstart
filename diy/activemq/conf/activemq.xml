@@ -17,9 +17,8 @@
 <!-- START SNIPPET: example -->
 <beans
   xmlns="http://www.springframework.org/schema/beans"
-  xmlns:amq="http://activemq.apache.org/schema/core"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
   http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
 
     <!-- Allows us to use system properties as variables in this configuration file -->
@@ -29,10 +28,16 @@
         </property>
     </bean>
 
+   <!-- Allows accessing the server log -->
+    <bean id="logQuery" class="io.fabric8.insight.log.log4j.Log4jLogQuery"
+          lazy-init="false" scope="singleton"
+          init-method="start" destroy-method="stop">
+    </bean>
+
     <!--
         The <broker> element is used to configure the ActiveMQ broker.
     -->
-    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="shekhar" dataDirectory="${activemq.data}">
+    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}">
 
         <!--
             For better performances use VM cursor and small memory limit.
@@ -94,24 +99,9 @@
 
           <!--
             The systemUsage controls the maximum amount of space the broker will
-            use before slowing down producers. For more information, see:
+            use before disabling caching and/or slowing down producers. For more information, see:
             http://activemq.apache.org/producer-flow-control.html
-            If using ActiveMQ embedded - the following limits could safely be used:
-
-        <systemUsage>
-            <systemUsage>
-                <memoryUsage>
-                    <memoryUsage limit="20 mb"/>
-                </memoryUsage>
-                <storeUsage>
-                    <storeUsage limit="1 gb"/>
-                </storeUsage>
-                <tempUsage>
-                    <tempUsage limit="100 mb"/>
-                </tempUsage>
-            </systemUsage>
-        </systemUsage>
-        -->
+          -->
           <systemUsage>
             <systemUsage>
                 <memoryUsage>
@@ -136,11 +126,16 @@
             <transportConnector name="http" uri="http://OPENSHIFT_DIY_IP:8080"/>
         </transportConnectors>
 
+        <!-- destroy the spring context on shutdown to stop jetty -->
+        <shutdownHooks>
+            <bean xmlns="http://www.springframework.org/schema/beans" class="org.apache.activemq.hooks.SpringContextHook" />
+        </shutdownHooks>
 
     </broker>
 
     <!--
         Enable web consoles, REST and Ajax APIs and demos
+        The web consoles requires by default login, you can disable this in the jetty.xml file
 
         Take a look at ${ACTIVEMQ_HOME}/conf/jetty.xml for more details
     -->
