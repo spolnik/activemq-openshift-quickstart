@@ -98,7 +98,7 @@
 
     <bean id="jettyPort" class="org.apache.activemq.web.WebConsolePort" init-method="start">
              <!-- the default port number for the web console -->
-        <property name="port" value="15005" />
+        <property name="port" value="8080" />
         <property name="host" value="OPENSHIFT_DIY_IP"/>
     </bean>
 
