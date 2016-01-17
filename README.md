@@ -4,5 +4,5 @@ https://github.com/openshift/origin-server/tree/master/cartridges/openshift-orig
 
 to quick create app use the following command :
 ```
-rhc app-create activemq diy --from-code=git://github.com/maxisoft/activemq-openshift-quickstart.git
+rhc app-create activemq diy --from-code=git://github.com/spolnik/activemq-openshift-quickstart.git
 ```
